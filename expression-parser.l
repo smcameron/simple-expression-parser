@@ -32,7 +32,7 @@ extern int lexer_input(char* buffer, int *nbytes, int buffersize);
 #define YY_INPUT(buffer, bytes_read, bytes_requested) \
 		lexer_input((buffer), &(bytes_read), (bytes_requested))
 
-extern int yyerror(int *result, double *dresult,
+extern int yyerror(long long *result, double *dresult,
 		int *has_error, int *bye, const char *msg);
 
 static void __attribute__((unused)) yyunput(int c,char *buf_ptr);
@@ -53,7 +53,7 @@ bye	return BYE;
 			rc = sscanf(yytext, "%lf", &dval);
 			if (rc == 1) {
 				yylval.v.dval = dval;
-				yylval.v.ival = (int) dval;
+				yylval.v.ival = (long long) dval;
 				yylval.v.has_dval = 1;
 				yylval.v.has_error = 0;
 				return NUMBER;

@@ -25,7 +25,7 @@
 
 struct parser_value_type {
 	double dval;
-	int ival;
+	long long ival;
 	int has_dval;
 	int has_error;
 };
@@ -36,7 +36,7 @@ typedef union valtype {
 
 #define YYSTYPE PARSER_VALUE_TYPE
 
-int yyerror(__attribute__((unused)) int *result,
+int yyerror(__attribute__((unused)) long long *result,
 		__attribute__((unused)) double *dresult,
 		__attribute__((unused)) int *has_error,
 		__attribute__((unused)) int *bye, const char *msg);
@@ -49,7 +49,7 @@ extern void yyrestart(FILE *file);
 %union valtype {
 	struct parser_value_type {
 		double dval;
-		int ival;
+		long long ival;
 		int has_dval;
 		int has_error;
 	} v;
@@ -60,7 +60,7 @@ extern void yyrestart(FILE *file);
 %left '-' '+'
 %left '*' '/'
 %nonassoc UMINUS
-%parse-param { int *result }
+%parse-param { long long *result }
 %parse-param { double *dresult }
 %parse-param { int *has_error }
 %parse-param { int *bye }
@@ -82,7 +82,7 @@ expression:	expression '+' expression {
 			if (!$1.has_dval && !$3.has_dval)
 				$$.ival = $1.ival + $3.ival;
 			else
-				$$.ival = (int) ($1.dval + $3.dval);
+				$$.ival = (long long) ($1.dval + $3.dval);
 			$$.dval = $1.dval + $3.dval;
 			$$.has_error = $1.has_error || $3.has_error;
 		}
@@ -90,7 +90,7 @@ expression:	expression '+' expression {
 			if (!$1.has_dval && !$3.has_dval)
 				$$.ival = $1.ival - $3.ival; 
 			else
-				$$.ival = (int) ($1.dval - $3.dval); 
+				$$.ival = (long long) ($1.dval - $3.dval); 
 			$$.dval = $1.dval - $3.dval; 
 			$$.has_error = $1.has_error || $3.has_error;
 		}
@@ -98,7 +98,7 @@ expression:	expression '+' expression {
 			if (!$1.has_dval && !$3.has_dval)
 				$$.ival = $1.ival * $3.ival;
 			else
-				$$.ival = (int) ($1.dval * $3.dval);
+				$$.ival = (long long) ($1.dval * $3.dval);
 			$$.dval = $1.dval * $3.dval;
 			$$.has_error = $1.has_error || $3.has_error;
 		}
@@ -112,7 +112,7 @@ expression:	expression '+' expression {
 			else
 				$$.dval = $1.dval / $3.dval;
 			if ($3.has_dval || $1.has_dval)
-				$$.ival = (int) $$.dval;
+				$$.ival = (long long) $$.dval;
 			$$.has_error = $1.has_error || $3.has_error;
 		}
 	|	'-' expression %prec UMINUS {
@@ -156,7 +156,7 @@ static void setup_to_parse_string(char *string)
 	lexer_read_offset = 0;
 }
 
-int evaluate_arithmetic_expression(char *buffer, int *ival, double *dval)
+int evaluate_arithmetic_expression(char *buffer, long long *ival, double *dval)
 {
 	int rc, bye = 0, has_error = 0;
 
@@ -171,7 +171,7 @@ int evaluate_arithmetic_expression(char *buffer, int *ival, double *dval)
 	return has_error;
 }
 
-int yyerror(__attribute__((unused)) int *result,
+int yyerror(__attribute__((unused)) long long *result,
 		__attribute__((unused)) double *dresult,
 		__attribute__((unused)) int *has_error,
 		__attribute__((unused)) int *bye, const char *msg)

@@ -25,7 +25,8 @@
  
 int main(int argc, char *argv[])
 {
-	int rc, has_error, result, bye = 0;
+	int rc, has_error,  bye = 0;
+	long long result;
 	double dresult;
 	char buffer[100];
 
@@ -37,7 +38,7 @@ int main(int argc, char *argv[])
 			buffer[rc - 1] = '\0';
 		rc = evaluate_arithmetic_expression(buffer, &result, &dresult);
 		if (!rc) {
-			printf("%d (%lf)\n", result, dresult);
+			printf("%lld (%lf)\n", result, dresult);
 		} else {
 			result = 0;
 			dresult = 0;

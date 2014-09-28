@@ -176,7 +176,7 @@ int yyerror(__attribute__((unused)) long long *result,
 		__attribute__((unused)) int *has_error,
 		__attribute__((unused)) int *bye, const char *msg)
 {
-	fprintf(stderr, "xxxx %s\n", msg);
+	fprintf(stderr, "%s\n", msg);
 	return 0;
 }
 

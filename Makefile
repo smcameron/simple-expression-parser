@@ -15,7 +15,7 @@ lex.yy.c:	expression-parser.l
 	$(LEX) expression-parser.l
 
 test-expression-parser:	y.tab.o lex.yy.o test-expression-parser.c
-	gcc -o test-expression-parser test-expression-parser.c y.tab.o lex.yy.o -ly -ll
+	gcc -o test-expression-parser test-expression-parser.c y.tab.o lex.yy.o -lm -ly -ll
 
 clean:
 	rm -f lex.yy.c y.tab.c y.tab.h *.o test-expression-parser \

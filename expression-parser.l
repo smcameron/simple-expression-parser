@@ -46,7 +46,7 @@ static int __attribute__((unused)) input(void);
 bye	return BYE;
 [ \t] ; /* ignore whitespace */
 #.+ ; /* ignore comments */
-[0-9]*[.][0-9]+|[0-9]+[eE][-+]*[0-9]+ {
+[0-9]*[.][0-9]+|[0-9]*[.]?[0-9]+[eE][-+]*[0-9]+ {
 			int rc;
 			double dval;
 
